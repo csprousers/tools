@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSPro.NET", "CSPro.NET\CSPro.NET.csproj", "{B64B8D34-409F-48D3-827C-9954476855E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPUMS Codebook to CSPro", "IPUMS Codebook to CSPro\IPUMS Codebook to CSPro.csproj", "{AA51DE23-0478-4B9F-B9F5-B5966DE3EB4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,16 @@ Global
 		{B64B8D34-409F-48D3-827C-9954476855E1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{B64B8D34-409F-48D3-827C-9954476855E1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{B64B8D34-409F-48D3-827C-9954476855E1}.Release|x86.ActiveCfg = Release|Any CPU
+		{AA51DE23-0478-4B9F-B9F5-B5966DE3EB4F}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{AA51DE23-0478-4B9F-B9F5-B5966DE3EB4F}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{AA51DE23-0478-4B9F-B9F5-B5966DE3EB4F}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{AA51DE23-0478-4B9F-B9F5-B5966DE3EB4F}.Debug|x86.ActiveCfg = Debug|x86
+		{AA51DE23-0478-4B9F-B9F5-B5966DE3EB4F}.Debug|x86.Build.0 = Debug|x86
+		{AA51DE23-0478-4B9F-B9F5-B5966DE3EB4F}.Release|Any CPU.ActiveCfg = Release|x86
+		{AA51DE23-0478-4B9F-B9F5-B5966DE3EB4F}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{AA51DE23-0478-4B9F-B9F5-B5966DE3EB4F}.Release|Mixed Platforms.Build.0 = Release|x86
+		{AA51DE23-0478-4B9F-B9F5-B5966DE3EB4F}.Release|x86.ActiveCfg = Release|x86
+		{AA51DE23-0478-4B9F-B9F5-B5966DE3EB4F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
