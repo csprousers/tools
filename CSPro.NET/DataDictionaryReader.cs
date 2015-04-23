@@ -118,7 +118,7 @@ namespace CSPro
             DataDictionaryReader ddr = new DataDictionaryReader();
             ddr._filename = filename;
 
-            using( ddr._tr = IO.CreateStreamReaderFromSpecFile(filename) )
+            using( ddr._tr = IO.CreateStreamReaderFromCSProFile(filename) )
             {
                 string line = null;
                 string prevLineToHandle = null;

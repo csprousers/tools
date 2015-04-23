@@ -22,7 +22,7 @@ namespace CSPro
             DataDictionaryWriter ddw = new DataDictionaryWriter();
             ddw._filename = filename;
 
-            using( ddw._tw = IO.CreateStreamReaderForSpecFile(filename,dictionary.Version) )
+            using( ddw._tw = IO.CreateStreamWriterForCSProFile(filename,dictionary.Version) )
             {
                 // save the header
                 ddw._tw.WriteLine(DataDictionaryElements.DICT_HEADER);
