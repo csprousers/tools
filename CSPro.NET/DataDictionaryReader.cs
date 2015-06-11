@@ -7,6 +7,14 @@ using System.IO;
 
 namespace CSPro
 {
+    public class DataDictionaryReaderException : Exception
+    {
+        public DataDictionaryReaderException(string line = null)
+            : base(line == null ? Errors.DataDictionary_ReadError : String.Format(Errors.DataDictionary_ReadErrorLine,line))
+        {
+        }
+    }
+
     public class DataDictionaryReader
     {
         private DataDictionary _dictionary = null;
@@ -24,19 +32,6 @@ namespace CSPro
         private DataDictionaryReader()
         {
             // a DataDictionaryReader object can only be created from within the Load function
-        }
-
-        private static void ThrowDictionaryException(string line = null)
-        {
-            string message;
-
-            if( line == null )
-                message = Errors.DataDictionary_ReadError;
-
-            else
-                message = String.Format(Errors.DataDictionary_ReadErrorLine,line);
-
-            throw new Exception(message);
         }
 
         private string ReadTrimmedLine()
@@ -59,7 +54,7 @@ namespace CSPro
             int equalsPos = line.IndexOf('=');
 
             if( equalsPos < 0 )
-                ThrowDictionaryException(line);
+                throw new DataDictionaryReaderException(line);
 
             argument = line.Substring(0,equalsPos).Trim();
             value = line.Substring(equalsPos + 1);
@@ -68,7 +63,7 @@ namespace CSPro
         private static string QuotedStringToString(string value)
         {
             if( !value.StartsWith("'") || !value.EndsWith("'") )
-                ThrowDictionaryException();
+                throw new DataDictionaryReaderException();
 
             return value.Substring(1,value.Length - 2);
         }
@@ -100,7 +95,7 @@ namespace CSPro
 
             else if( argument.Equals(DataDictionaryElements.DICT_NAME,StringComparison.InvariantCultureIgnoreCase) )
             {
-                dictObject.Name = value;
+                dictObject.Name = value.ToUpper();
                 return true;
             }
 
@@ -157,11 +152,11 @@ namespace CSPro
                             prevLineToHandle = ddr.LoadRelation();
 
                         else
-                            ThrowDictionaryException(line);
+                            throw new DataDictionaryReaderException(line);
                     }
 
                     else // an unrecognized command
-                        ThrowDictionaryException(line);
+                        throw new DataDictionaryReaderException(line);
                 }
 
                 return ddr._dictionary;
@@ -187,7 +182,7 @@ namespace CSPro
                 else if( argument.Equals(DataDictionaryElements.HEADER_VERSION,StringComparison.InvariantCultureIgnoreCase) )
                 {
                     if( value.IndexOf(DataDictionaryElements.HEADER_VERSION_CSPRO,StringComparison.InvariantCultureIgnoreCase) != 0 )
-                        ThrowDictionaryException(line);
+                        throw new DataDictionaryReaderException(line);
 
                     _dictionary.Version = Double.Parse(value.Substring(DataDictionaryElements.HEADER_VERSION_CSPRO.Length),CultureInfo.InvariantCulture);
                 }
@@ -211,7 +206,7 @@ namespace CSPro
                     _dictionary.UsingValueSetImages = value.Equals(DataDictionaryElements.DICT_YES,StringComparison.InvariantCultureIgnoreCase);
 
                 else
-                    ThrowDictionaryException(line);
+                    throw new DataDictionaryReaderException(line);
             }
 
             return line;
@@ -236,7 +231,7 @@ namespace CSPro
                 }
 
                 else
-                    ThrowDictionaryException(line);
+                    throw new DataDictionaryReaderException(line);
             }
 
             _dictionary.AddLevel(_level);
@@ -276,7 +271,7 @@ namespace CSPro
                     ProcessOccurrenceLabel(_record.OccurrenceLabels,_record.MaxOccs,value);
 
                 else
-                    ThrowDictionaryException(line);
+                    throw new DataDictionaryReaderException(line);
             }
 
             _level.AddRecord(_record);
@@ -336,7 +331,7 @@ namespace CSPro
                     ProcessOccurrenceLabel(_item.OccurrenceLabels,_item.Occurrences,value);
 
                 else
-                    ThrowDictionaryException(line);
+                    throw new DataDictionaryReaderException(line);
             }
 
             if( !_item.Subitem )
@@ -366,7 +361,7 @@ namespace CSPro
                 {
                     if( firstName )
                     {
-                        _valueset.Name = value;
+                        _valueset.Name = value.ToUpper();
                         firstName = false;
                     }
 
@@ -375,7 +370,7 @@ namespace CSPro
                         int commaPos = value.IndexOf(',');
 
                         if( commaPos < 0 )
-                            ThrowDictionaryException(line);
+                            throw new DataDictionaryReaderException(line);
 
                         string specialVal,description;
 
@@ -383,7 +378,7 @@ namespace CSPro
                         description = value.Substring(commaPos + 1);
 
                         if( !description.Equals(DataDictionaryElements.VALUE_SPECIAL,StringComparison.InvariantCultureIgnoreCase) )
-                            ThrowDictionaryException(line);
+                            throw new DataDictionaryReaderException(line);
 
                         else if( specialVal.Equals(DataDictionaryElements.VALUE_MISSING,StringComparison.InvariantCultureIgnoreCase) )
                             _vsValue.SpecialValue = Value.Special.Missing;
@@ -395,7 +390,7 @@ namespace CSPro
                             _vsValue.SpecialValue = Value.Special.Default;
 
                         else
-                            ThrowDictionaryException(line);
+                            throw new DataDictionaryReaderException(line);
                     }
                 }
 
@@ -432,7 +427,7 @@ namespace CSPro
                     _vsValue.ImageFilename = Paths.MakeAbsolutePath(Path.GetDirectoryName(_filename),value);
 
                 else
-                    ThrowDictionaryException(line);
+                    throw new DataDictionaryReaderException(line);
             }
 
             _item.AddValueSet(_valueset);
@@ -470,7 +465,7 @@ namespace CSPro
                 }
 
                 else
-                    ThrowDictionaryException(line);
+                    throw new DataDictionaryReaderException(line);
             }
 
             else if( line.IndexOf('"') == 0 )
@@ -486,7 +481,7 @@ namespace CSPro
                 }
 
                 else
-                    ThrowDictionaryException(line);
+                    throw new DataDictionaryReaderException(line);
             }
 
             string thisValue;
@@ -537,7 +532,7 @@ namespace CSPro
                 ParseLine(line,out argument,out value);
 
                 if( argument.Equals(DataDictionaryElements.DICT_NAME,StringComparison.InvariantCultureIgnoreCase) )
-                    relation.Name = value;
+                    relation.Name = value.ToUpper();
 
                 else if( argument.Equals(DataDictionaryElements.RELATION_PRIMARY,StringComparison.InvariantCultureIgnoreCase) )
                     relation.Primary = value;
@@ -552,7 +547,7 @@ namespace CSPro
                     relation.SecondaryLink = value;
 
                 else
-                    ThrowDictionaryException(line);
+                    throw new DataDictionaryReaderException(line);
             }
 
             _dictionary.Relations.Add(relation);
@@ -565,7 +560,7 @@ namespace CSPro
             int commaPos = line.IndexOf(',');
 
             if( commaPos < 0 )
-                ThrowDictionaryException(line);
+                throw new DataDictionaryReaderException(line);
 
             int occ = Int32.Parse(line.Substring(0,commaPos),CultureInfo.InvariantCulture);
 
