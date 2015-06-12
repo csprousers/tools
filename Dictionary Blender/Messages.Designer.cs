@@ -79,6 +79,15 @@ namespace Dictionary_Blender {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This program currently does not work with dictionaries that contain relations.
+        /// </summary>
+        internal static string DictionaryHasRelations {
+            get {
+                return ResourceManager.GetString("DictionaryHasRelations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dictionary {0} loaded.
         /// </summary>
         internal static string DictionaryLoaded {
@@ -106,7 +115,7 @@ namespace Dictionary_Blender {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This program can now only work with one-level dictionaries.
+        ///   Looks up a localized string similar to This program currently only works with one-level dictionaries.
         /// </summary>
         internal static string DictionaryNotOneLevel {
             get {
@@ -138,6 +147,15 @@ namespace Dictionary_Blender {
         internal static string FileNotExist {
             get {
                 return ResourceManager.GetString("FileNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The label for {0} was changed to &quot;{1}&quot;.
+        /// </summary>
+        internal static string LabelModified {
+            get {
+                return ResourceManager.GetString("LabelModified", resourceCulture);
             }
         }
         
@@ -178,11 +196,47 @@ namespace Dictionary_Blender {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The symbol {0} is contained in more than one dictionary so much be specified with dot notation.
+        /// </summary>
+        internal static string SymbolAmbiguous {
+            get {
+                return ResourceManager.GetString("SymbolAmbiguous", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The dictionary could not be loaded because {0} is the name of a loaded dictionary and thus would lead to ambiguity.
         /// </summary>
         internal static string SymbolNameInUse {
             get {
                 return ResourceManager.GetString("SymbolNameInUse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The symbol {0} is not of the type expected.
+        /// </summary>
+        internal static string SymbolNotAllowedType {
+            get {
+                return ResourceManager.GetString("SymbolNotAllowedType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No symbol named {0} has been loaded.
+        /// </summary>
+        internal static string SymbolNotFound {
+            get {
+                return ResourceManager.GetString("SymbolNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No symbol named {0} is contained in the dictionary {1}.
+        /// </summary>
+        internal static string SymbolNotFoundInDictionary {
+            get {
+                return ResourceManager.GetString("SymbolNotFoundInDictionary", resourceCulture);
             }
         }
     }

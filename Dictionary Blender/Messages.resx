@@ -123,6 +123,9 @@
   <data name="DictionaryClosed" xml:space="preserve">
     <value>Dictionary {0} closed</value>
   </data>
+  <data name="DictionaryHasRelations" xml:space="preserve">
+    <value>This program currently does not work with dictionaries that contain relations</value>
+  </data>
   <data name="DictionaryLoaded" xml:space="preserve">
     <value>Dictionary {0} loaded</value>
   </data>
@@ -133,7 +136,7 @@
     <value>No dictionary named {0} has been loaded</value>
   </data>
   <data name="DictionaryNotOneLevel" xml:space="preserve">
-    <value>This program can now only work with one-level dictionaries</value>
+    <value>This program currently only works with one-level dictionaries</value>
   </data>
   <data name="DictionaryReadError" xml:space="preserve">
     <value>The dictionary could not be loaded due to an error: {0}</value>
@@ -143,6 +146,9 @@
   </data>
   <data name="FileNotExist" xml:space="preserve">
     <value>The file {0} does not exist</value>
+  </data>
+  <data name="LabelModified" xml:space="preserve">
+    <value>The label for {0} was changed to "{1}"</value>
   </data>
   <data name="ProcessorInvalidNumberArguments" xml:space="preserve">
     <value>The number of arguments is not correct. {0} expects {1} arguments</value>
@@ -156,7 +162,19 @@
   <data name="ProcessorUnrecognizedCommand" xml:space="preserve">
     <value>Unrecognized command</value>
   </data>
+  <data name="SymbolAmbiguous" xml:space="preserve">
+    <value>The symbol {0} is contained in more than one dictionary so much be specified with dot notation</value>
+  </data>
   <data name="SymbolNameInUse" xml:space="preserve">
     <value>The dictionary could not be loaded because {0} is the name of a loaded dictionary and thus would lead to ambiguity</value>
+  </data>
+  <data name="SymbolNotAllowedType" xml:space="preserve">
+    <value>The symbol {0} is not of the type expected</value>
+  </data>
+  <data name="SymbolNotFound" xml:space="preserve">
+    <value>No symbol named {0} has been loaded</value>
+  </data>
+  <data name="SymbolNotFoundInDictionary" xml:space="preserve">
+    <value>No symbol named {0} is contained in the dictionary {1}</value>
   </data>
 </root>
