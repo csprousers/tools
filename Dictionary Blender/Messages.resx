@@ -162,17 +162,29 @@
   <data name="ProcessorUnrecognizedCommand" xml:space="preserve">
     <value>Unrecognized command</value>
   </data>
-  <data name="RemovedIDsDisabled" xml:space="preserve">
+  <data name="RemoveIDsDisabled" xml:space="preserve">
     <value>You cannot remove the IDs from your dictionary</value>
   </data>
-  <data name="RemovedItem" xml:space="preserve">
+  <data name="RemoveItem" xml:space="preserve">
     <value>Removed item {0} located on record {1}</value>
   </data>
-  <data name="RemovedRecord" xml:space="preserve">
+  <data name="RemoveRecord" xml:space="preserve">
     <value>Removed record {0} containing {1} items</value>
   </data>
-  <data name="RemovedValueSet" xml:space="preserve">
+  <data name="RemoveValueSet" xml:space="preserve">
     <value>Removed value set {0} located on item {1}</value>
+  </data>
+  <data name="RenameBadName" xml:space="preserve">
+    <value>{0} is an invalid CSPro object name</value>
+  </data>
+  <data name="RenameNameUsedDictionary" xml:space="preserve">
+    <value>The name {0} refers to a currently loaded dictionary so {1} cannot be renamed to {0}</value>
+  </data>
+  <data name="RenameNameUsedWithinDictionary" xml:space="preserve">
+    <value>The name {0} is already used in the dictionary named {1}</value>
+  </data>
+  <data name="RenameSuccess" xml:space="preserve">
+    <value>{0} renamed to {1}</value>
   </data>
   <data name="SymbolAmbiguous" xml:space="preserve">
     <value>The symbol {0} is contained in more than one dictionary so much be specified with dot notation</value>

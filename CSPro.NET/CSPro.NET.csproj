@@ -52,6 +52,7 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="IO.cs" />
+    <Compile Include="Names.cs" />
     <Compile Include="Paths.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CurrentVersion.cs" />

@@ -198,36 +198,72 @@ namespace Dictionary_Blender {
         /// <summary>
         ///   Looks up a localized string similar to You cannot remove the IDs from your dictionary.
         /// </summary>
-        internal static string RemovedIDsDisabled {
+        internal static string RemoveIDsDisabled {
             get {
-                return ResourceManager.GetString("RemovedIDsDisabled", resourceCulture);
+                return ResourceManager.GetString("RemoveIDsDisabled", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Removed item {0} located on record {1}.
         /// </summary>
-        internal static string RemovedItem {
+        internal static string RemoveItem {
             get {
-                return ResourceManager.GetString("RemovedItem", resourceCulture);
+                return ResourceManager.GetString("RemoveItem", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Removed record {0} containing {1} items.
         /// </summary>
-        internal static string RemovedRecord {
+        internal static string RemoveRecord {
             get {
-                return ResourceManager.GetString("RemovedRecord", resourceCulture);
+                return ResourceManager.GetString("RemoveRecord", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Removed value set {0} located on item {1}.
         /// </summary>
-        internal static string RemovedValueSet {
+        internal static string RemoveValueSet {
             get {
-                return ResourceManager.GetString("RemovedValueSet", resourceCulture);
+                return ResourceManager.GetString("RemoveValueSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is an invalid CSPro object name.
+        /// </summary>
+        internal static string RenameBadName {
+            get {
+                return ResourceManager.GetString("RenameBadName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name {0} refers to a currently loaded dictionary so {1} cannot be renamed to {0}.
+        /// </summary>
+        internal static string RenameNameUsedDictionary {
+            get {
+                return ResourceManager.GetString("RenameNameUsedDictionary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name {0} is already used in the dictionary named {1}.
+        /// </summary>
+        internal static string RenameNameUsedWithinDictionary {
+            get {
+                return ResourceManager.GetString("RenameNameUsedWithinDictionary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} renamed to {1}.
+        /// </summary>
+        internal static string RenameSuccess {
+            get {
+                return ResourceManager.GetString("RenameSuccess", resourceCulture);
             }
         }
         

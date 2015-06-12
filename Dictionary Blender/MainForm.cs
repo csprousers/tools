@@ -29,6 +29,7 @@ namespace Dictionary_Blender
             _functions.Add("SAVE",new BlenderFunction(ProcessSave,2));
             _functions.Add("LABEL",new BlenderFunction(ProcessLabel,2));
             _functions.Add("REMOVE",new BlenderFunction(ProcessRemove,1));
+            _functions.Add("RENAME",new BlenderFunction(ProcessRename,2));
         }
 
         public MainForm()
@@ -191,6 +192,16 @@ namespace Dictionary_Blender
             throw new Exception(String.Format(Messages.SymbolNotAllowedType,name.ToUpper()));
         }
 
+        private DataDictionary GetDataDictionaryFromSymbol(DataDictionaryObject symbol)
+        {
+            return symbol is DataDictionary ? (DataDictionary)symbol :
+                symbol is Level ? ( (Level)symbol ).ParentDictionary :
+                symbol is Record ? ( (Record)symbol ).ParentDictionary :
+                symbol is Item ? ( (Item)symbol ).ParentDictionary :
+                symbol is ValueSet ? ( (ValueSet)symbol ).ParentDictionary :
+                null;
+        }
+
 
         // EXIT -- no parameters
         private void ProcessExit(string[] commands)
@@ -346,11 +357,11 @@ namespace Dictionary_Blender
                 dictionary = record.ParentDictionary;
 
                 if( level.IDs == record )
-                    throw new Exception(Messages.RemovedIDsDisabled);
+                    throw new Exception(Messages.RemoveIDsDisabled);
 
                 level.Records.Remove(record);
 
-                SetOutputSuccess(String.Format(Messages.RemovedRecord,record.Name,record.Items.Count));
+                SetOutputSuccess(String.Format(Messages.RemoveRecord,record.Name,record.Items.Count));
             }
 
             else if( symbol is Item )
@@ -368,7 +379,7 @@ namespace Dictionary_Blender
                 DataDictionaryWorker.CalculateItemPositions(dictionary);
                 DataDictionaryWorker.CalculateRecordLengths(dictionary);
 
-                SetOutputSuccess(String.Format(Messages.RemovedItem,item.Name,record.Name));
+                SetOutputSuccess(String.Format(Messages.RemoveItem,item.Name,record.Name));
             }
 
             else // ValueSet
@@ -379,12 +390,52 @@ namespace Dictionary_Blender
 
                 item.ValueSets.Remove(vs);
 
-                SetOutputSuccess(String.Format(Messages.RemovedValueSet,vs.Name,item.Name));
+                SetOutputSuccess(String.Format(Messages.RemoveValueSet,vs.Name,item.Name));
             }
 
             LoadDictionarySymbols(dictionary);
             RefreshSymbolParents();
         }
+
+
+        // RENAME -- symbol-name new-symbol-name
+        private void ProcessRename(string[] commands)
+        {
+            DataDictionaryObject symbol = GetSymbolFromName(commands[1],SymbolTypes.AllSupported);
+            string oldName = symbol.Name;
+            string newName = commands[2].ToUpper();
+
+            // check that the name is a valid name
+            if( !Names.IsValid(newName) )
+                throw new Exception(String.Format(Messages.RenameBadName,newName));
+
+            // check that a dictionary with the same name has not been loaded
+            if( _dictionaries.ContainsKey(newName) )
+                throw new Exception(String.Format(Messages.RenameNameUsedDictionary,newName,symbol.Name));
+
+            DataDictionary dictionary = GetDataDictionaryFromSymbol(symbol);
+
+            // check that the name does not already exist within the dictionary
+            if( _dictionarySymbols[dictionary.Name].ContainsKey(newName) )
+                throw new Exception(String.Format(Messages.RenameNameUsedWithinDictionary,newName,dictionary.Name));
+
+            // a couple things if changing the name of a dictionary
+            if( symbol == dictionary )
+            {
+                _dictionaries.Remove(dictionary.Name);
+                _dictionarySymbols.Remove(dictionary.Name);
+
+                _dictionaries.Add(newName,dictionary);
+            }
+               
+            // change the name
+            symbol.Name = newName;
+
+            LoadDictionarySymbols(dictionary);
+            RefreshSymbolParents();
+
+            SetOutputSuccess(String.Format(Messages.RenameSuccess,oldName,newName));
+        }        
 
     }
 }
