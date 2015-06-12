@@ -28,6 +28,7 @@ namespace Dictionary_Blender
             _functions.Add("CLOSE",new BlenderFunction(ProcessClose,1));
             _functions.Add("SAVE",new BlenderFunction(ProcessSave,2));
             _functions.Add("LABEL",new BlenderFunction(ProcessLabel,2));
+            _functions.Add("REMOVE",new BlenderFunction(ProcessRemove,1));
         }
 
         public MainForm()
@@ -236,7 +237,7 @@ namespace Dictionary_Blender
             foreach( Relation relation in dictionary.Relations )
                 AddSymbol(symbols,relation.Name,relation);
             
-            _dictionarySymbols.Add(dictionary.Name,symbols);
+            _dictionarySymbols[dictionary.Name] = symbols;
         }
 
 
@@ -328,7 +329,61 @@ namespace Dictionary_Blender
         {
             DataDictionaryObject symbol = GetSymbolFromName(commands[1],SymbolTypes.AllSupported);
             symbol.Label = commands[2];
-            SetOutputSuccess(String.Format(Messages.LabelModified,commands[1].ToUpper(),commands[2]));
+            SetOutputSuccess(String.Format(Messages.LabelModified,symbol.Name,commands[2]));
+        }
+
+
+        // REMOVE -- symbol-name
+        private void ProcessRemove(string[] commands)
+        {
+            DataDictionaryObject symbol = GetSymbolFromName(commands[1],SymbolTypes.Record | SymbolTypes.Item | SymbolTypes.ValueSet);
+            DataDictionary dictionary = null;
+
+            if( symbol is Record )
+            {
+                Record record = (Record)symbol;
+                Level level = record.ParentLevel;
+                dictionary = record.ParentDictionary;
+
+                if( level.IDs == record )
+                    throw new Exception(Messages.RemovedIDsDisabled);
+
+                level.Records.Remove(record);
+
+                SetOutputSuccess(String.Format(Messages.RemovedRecord,record.Name,record.Items.Count));
+            }
+
+            else if( symbol is Item )
+            {
+                Item item = (Item)symbol;
+                Record record = item.ParentRecord;
+                dictionary = item.ParentDictionary;
+
+                record.Items.Remove(item);
+
+                // delete any subitems associated with the item
+                foreach( Item subitem in item.Subitems )
+                    record.Items.Remove(subitem);
+
+                DataDictionaryWorker.CalculateItemPositions(dictionary);
+                DataDictionaryWorker.CalculateRecordLengths(dictionary);
+
+                SetOutputSuccess(String.Format(Messages.RemovedItem,item.Name,record.Name));
+            }
+
+            else // ValueSet
+            {
+                ValueSet vs = (ValueSet)symbol;
+                Item item = vs.ParentItem;
+                dictionary = vs.ParentDictionary;
+
+                item.ValueSets.Remove(vs);
+
+                SetOutputSuccess(String.Format(Messages.RemovedValueSet,vs.Name,item.Name));
+            }
+
+            LoadDictionarySymbols(dictionary);
+            RefreshSymbolParents();
         }
 
     }

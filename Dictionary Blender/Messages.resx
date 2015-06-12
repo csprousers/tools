@@ -162,6 +162,18 @@
   <data name="ProcessorUnrecognizedCommand" xml:space="preserve">
     <value>Unrecognized command</value>
   </data>
+  <data name="RemovedIDsDisabled" xml:space="preserve">
+    <value>You cannot remove the IDs from your dictionary</value>
+  </data>
+  <data name="RemovedItem" xml:space="preserve">
+    <value>Removed item {0} located on record {1}</value>
+  </data>
+  <data name="RemovedRecord" xml:space="preserve">
+    <value>Removed record {0} containing {1} items</value>
+  </data>
+  <data name="RemovedValueSet" xml:space="preserve">
+    <value>Removed value set {0} located on item {1}</value>
+  </data>
   <data name="SymbolAmbiguous" xml:space="preserve">
     <value>The symbol {0} is contained in more than one dictionary so much be specified with dot notation</value>
   </data>

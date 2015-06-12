@@ -66,6 +66,8 @@ namespace CSPro
         private List<Record> _records;
 
         public DataDictionary Parent { get { return _parent; } }
+        public DataDictionary ParentDictionary { get { return _parent; } }
+
         public Record IDs { get { return _ids; } }
         public List<Record> Records { get { return _records; } }
 
@@ -95,6 +97,9 @@ namespace CSPro
         private List<string> _occurrenceLabels;
 
         public Level Parent { get { return _parent; } }
+        public Level ParentLevel { get { return _parent; } }
+        public DataDictionary ParentDictionary { get { return _parent.ParentDictionary; } }
+
         public List<Item> Items { get { return _items; } }
         public List<string> OccurrenceLabels { get { return _occurrenceLabels; } }
 
@@ -128,6 +133,10 @@ namespace CSPro
         private List<string> _occurrenceLabels;
 
         public Record Parent { get { return _parent; } }
+        public Record ParentRecord { get { return _parent; } }
+        public Level ParentLevel { get { return _parent.ParentLevel; } }
+        public DataDictionary ParentDictionary { get { return _parent.ParentDictionary; } }
+
         public List<ValueSet> ValueSets { get { return _valuesets; } }
         public List<Item> Subitems { get { return _subitems; } }
         public List<string> OccurrenceLabels { get { return _occurrenceLabels; } }
@@ -171,6 +180,11 @@ namespace CSPro
         private List<Value> _values;
 
         public Item Parent { get { return _parent; } }
+        public Item ParentItem { get { return _parent; } }
+        public Record ParentRecord { get { return _parent.ParentRecord; } }
+        public Level ParentLevel { get { return _parent.ParentLevel; } }
+        public DataDictionary ParentDictionary { get { return _parent.ParentDictionary; } }
+
         public List<Value> Values { get { return _values; } }
 
         public int LinkID { get; set; }

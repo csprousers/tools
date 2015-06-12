@@ -196,6 +196,42 @@ namespace Dictionary_Blender {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You cannot remove the IDs from your dictionary.
+        /// </summary>
+        internal static string RemovedIDsDisabled {
+            get {
+                return ResourceManager.GetString("RemovedIDsDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removed item {0} located on record {1}.
+        /// </summary>
+        internal static string RemovedItem {
+            get {
+                return ResourceManager.GetString("RemovedItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removed record {0} containing {1} items.
+        /// </summary>
+        internal static string RemovedRecord {
+            get {
+                return ResourceManager.GetString("RemovedRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removed value set {0} located on item {1}.
+        /// </summary>
+        internal static string RemovedValueSet {
+            get {
+                return ResourceManager.GetString("RemovedValueSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The symbol {0} is contained in more than one dictionary so much be specified with dot notation.
         /// </summary>
         internal static string SymbolAmbiguous {
