@@ -176,5 +176,14 @@ namespace Dictionary_Blender {
                 return ResourceManager.GetString("ProcessorUnrecognizedCommand", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The dictionary could not be loaded because {0} is the name of a loaded dictionary and thus would lead to ambiguity.
+        /// </summary>
+        internal static string SymbolNameInUse {
+            get {
+                return ResourceManager.GetString("SymbolNameInUse", resourceCulture);
+            }
+        }
     }
 }

@@ -156,4 +156,7 @@
   <data name="ProcessorUnrecognizedCommand" xml:space="preserve">
     <value>Unrecognized command</value>
   </data>
+  <data name="SymbolNameInUse" xml:space="preserve">
+    <value>The dictionary could not be loaded because {0} is the name of a loaded dictionary and thus would lead to ambiguity</value>
+  </data>
 </root>

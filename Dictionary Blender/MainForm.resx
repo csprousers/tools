@@ -121,7 +121,7 @@
     <value>RUN &lt;script-filename&gt;
 EXIT
 
-LOAD &lt;filename&gt;
+OPEN &lt;filename&gt;
 SAVE &lt;dictionary&gt; &lt;filename&gt;
 CLOSE &lt;dictionary&gt;
 

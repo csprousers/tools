@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -23,7 +24,7 @@ namespace Dictionary_Blender
         private void InitializeFunctions()
         {
             _functions.Add("EXIT",new BlenderFunction(ProcessExit,0));
-            _functions.Add("LOAD",new BlenderFunction(ProcessLoad,1));
+            _functions.Add("OPEN",new BlenderFunction(ProcessOpen,1));
             _functions.Add("CLOSE",new BlenderFunction(ProcessClose,1));
             _functions.Add("SAVE",new BlenderFunction(ProcessSave,2));
         }
@@ -45,11 +46,13 @@ namespace Dictionary_Blender
         private void SetOutputError(string message)
         {
             textBoxOutput.Text = message;
+            textBoxOutput.ForeColor = Color.Red;
         }
 
         private void SetOutputSuccess(string message)
         {
             textBoxOutput.Text = message;
+            textBoxOutput.ForeColor = Color.Black;
             textBoxCommand.Text = ""; // if successful, clear the command
         }
 
@@ -124,16 +127,24 @@ namespace Dictionary_Blender
         }
 
 
+        private void AddSymbol(Dictionary<string,object> symbols,string name,object symbol)
+        {
+            if( _dictionaries.ContainsKey(name) )
+                throw new Exception(String.Format(Messages.SymbolNameInUse,name));
+
+            symbols.Add(name,symbol);
+        }
+
         private void LoadRecordSymbols(Dictionary<string,object> symbols,Record record)
         {
-            symbols.Add(record.Name,record);
+            AddSymbol(symbols,record.Name,record);
 
             foreach( Item item in record.Items )
             {
-                symbols.Add(item.Name,item);
+                AddSymbol(symbols,item.Name,item);
 
                 foreach( ValueSet vs in item.ValueSets )
-                    symbols.Add(vs.Name,vs);
+                    AddSymbol(symbols,vs.Name,vs);
             }
         }
 
@@ -143,7 +154,7 @@ namespace Dictionary_Blender
 
             foreach( Level level in dictionary.Levels )
             {
-                symbols.Add(level.Name,level);
+                AddSymbol(symbols,level.Name,level);
 
                 LoadRecordSymbols(symbols,level.IDs);
 
@@ -152,7 +163,7 @@ namespace Dictionary_Blender
             }
 
             foreach( Relation relation in dictionary.Relations )
-                symbols.Add(relation.Name,relation);
+                AddSymbol(symbols,relation.Name,relation);
             
             _dictionarySymbols.Add(dictionary.Name,symbols);
         }
@@ -177,8 +188,8 @@ namespace Dictionary_Blender
         }
 
 
-        // LOAD -- dictionary-filename
-        private void ProcessLoad(string[] commands)
+        // OPEN -- dictionary-filename
+        private void ProcessOpen(string[] commands)
         {
             string filename = GetFilenameFromArgument(commands[1]);
 
@@ -197,9 +208,10 @@ namespace Dictionary_Blender
             if( _symbolParents.ContainsKey(dictionary.Name) )
                 throw new Exception(String.Format(Messages.DictionaryNameInUse,dictionary.Name,_symbolParents[dictionary.Name][0].Name));
 
+            LoadDictionarySymbols(dictionary);
+
             _dictionaries.Add(dictionary.Name,dictionary);
 
-            LoadDictionarySymbols(dictionary);
             RefreshSymbolParents();
 
             SetOutputSuccess(String.Format(Messages.DictionaryLoaded,dictionary.Name));
