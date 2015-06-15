@@ -295,6 +295,15 @@ namespace Dictionary_Blender {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} commands successfully run from {1}.
+        /// </summary>
+        internal static string RunSuccess {
+            get {
+                return ResourceManager.GetString("RunSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The symbol {0} is contained in more than one dictionary so much be specified with dot notation.
         /// </summary>
         internal static string SymbolAmbiguous {

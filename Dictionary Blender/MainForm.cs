@@ -31,6 +31,7 @@ namespace Dictionary_Blender
             _functions.Add("REMOVE",new BlenderFunction(ProcessRemove,1));
             _functions.Add("RENAME",new BlenderFunction(ProcessRename,2));
             _functions.Add("FLATTEN",new BlenderFunction(ProcessFlatten,1));
+            _functions.Add("RUN",new BlenderFunction(ProcessRun,1));
         }
 
         public MainForm()
@@ -39,6 +40,14 @@ namespace Dictionary_Blender
 
             InitializeFunctions();
             RefreshSymbolParents();
+        }
+
+        private void MainForm_Shown(object sender,EventArgs e)
+        {
+            Array commandArgs = Environment.GetCommandLineArgs();
+
+            if( commandArgs.Length >= 2 )
+                RunScript((string)commandArgs.GetValue(1));
         }
 
         private void buttonEnter_Click(object sender,EventArgs e)
@@ -60,7 +69,7 @@ namespace Dictionary_Blender
             textBoxCommand.Text = ""; // if successful, clear the command
         }
 
-        private void ProcessCommand(string command)
+        private bool ProcessCommand(string command)
         {
             try
             {
@@ -106,7 +115,10 @@ namespace Dictionary_Blender
             catch( Exception exception )
             {
                 SetOutputError(exception.Message);
+                return false;
             }
+
+            return true;
         }
 
 
@@ -547,6 +559,58 @@ namespace Dictionary_Blender
 
             SetOutputSuccess(String.Format(Messages.FlattenSuccess,item.Name,item.Occurrences,itemsAdded));
         }
+
+
+        public void RunScript(string filename)
+        {
+            int commandsProcessed = 0;
+            bool ranToCompletion = false;
+
+            try
+            {
+                filename = new FileInfo(filename).FullName;
+                
+                if( !File.Exists(filename) )
+                    throw new Exception(String.Format(Messages.FileNotExist,filename));
+
+                string[] commands = File.ReadAllLines(filename);
+                
+                ranToCompletion = true;
+
+                for( int i = 0; i < commands.Length; i++ )
+                {
+                    string command = commands[i].Trim();
+
+                    if( command.Length == 0 )
+                        continue; // skip blank lines
+
+                    if( ProcessCommand(command) )
+                        commandsProcessed++;
+
+                    else
+                    {
+                        labelCommand.Text = command;
+                        ranToCompletion = false;
+                        break;
+                    }
+                }
+            }
+
+            catch( Exception exception )
+            {
+                SetOutputError(exception.Message);
+            }
+
+            if( ranToCompletion )
+                SetOutputSuccess(String.Format(Messages.RunSuccess,commandsProcessed,filename));
+        }
+
+        // RUN -- script-filename
+        private void ProcessRun(string[] commands)
+        {
+            RunScript(commands[1]);
+        }
+
 
     }
 }

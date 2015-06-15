@@ -195,6 +195,9 @@
   <data name="RenameSuccess" xml:space="preserve">
     <value>{0} renamed to {1}</value>
   </data>
+  <data name="RunSuccess" xml:space="preserve">
+    <value>{0} commands successfully run from {1}</value>
+  </data>
   <data name="SymbolAmbiguous" xml:space="preserve">
     <value>The symbol {0} is contained in more than one dictionary so much be specified with dot notation</value>
   </data>
