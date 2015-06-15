@@ -151,11 +151,56 @@ namespace Dictionary_Blender {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The item {0} does not have multiple occurrences.
+        /// </summary>
+        internal static string FlattenMustHaveOccurrences {
+            get {
+                return ResourceManager.GetString("FlattenMustHaveOccurrences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flattening {0} could not occur because the needed name {1} was not available.
+        /// </summary>
+        internal static string FlattenNameInvalid {
+            get {
+                return ResourceManager.GetString("FlattenNameInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The label for {0} was changed to &quot;{1}&quot;.
         /// </summary>
         internal static string LabelModified {
             get {
                 return ResourceManager.GetString("LabelModified", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is an invalid CSPro object name.
+        /// </summary>
+        internal static string NameCheckInvalid {
+            get {
+                return ResourceManager.GetString("NameCheckInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name {0} refers to a currently loaded dictionary and cannot be used.
+        /// </summary>
+        internal static string NameCheckUsedAsDictionary {
+            get {
+                return ResourceManager.GetString("NameCheckUsedAsDictionary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name {0} is already used in the dictionary named {1}.
+        /// </summary>
+        internal static string NameCheckUsedWithinDictionary {
+            get {
+                return ResourceManager.GetString("NameCheckUsedWithinDictionary", resourceCulture);
             }
         }
         
@@ -228,33 +273,6 @@ namespace Dictionary_Blender {
         internal static string RemoveValueSet {
             get {
                 return ResourceManager.GetString("RemoveValueSet", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} is an invalid CSPro object name.
-        /// </summary>
-        internal static string RenameBadName {
-            get {
-                return ResourceManager.GetString("RenameBadName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The name {0} refers to a currently loaded dictionary so {1} cannot be renamed to {0}.
-        /// </summary>
-        internal static string RenameNameUsedDictionary {
-            get {
-                return ResourceManager.GetString("RenameNameUsedDictionary", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The name {0} is already used in the dictionary named {1}.
-        /// </summary>
-        internal static string RenameNameUsedWithinDictionary {
-            get {
-                return ResourceManager.GetString("RenameNameUsedWithinDictionary", resourceCulture);
             }
         }
         

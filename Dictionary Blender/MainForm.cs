@@ -30,6 +30,7 @@ namespace Dictionary_Blender
             _functions.Add("LABEL",new BlenderFunction(ProcessLabel,2));
             _functions.Add("REMOVE",new BlenderFunction(ProcessRemove,1));
             _functions.Add("RENAME",new BlenderFunction(ProcessRename,2));
+            _functions.Add("FLATTEN",new BlenderFunction(ProcessFlatten,1));
         }
 
         public MainForm()
@@ -398,26 +399,30 @@ namespace Dictionary_Blender
         }
 
 
+        public void CheckIfValidNewName(DataDictionary dictionary,string newName)
+        {
+            if( !Names.IsValid(newName) )
+                throw new Exception(String.Format(Messages.NameCheckInvalid,newName));
+
+            // check that a dictionary with the same name has not been loaded
+            if( _dictionaries.ContainsKey(newName) )
+                throw new Exception(String.Format(Messages.NameCheckUsedAsDictionary,newName));
+
+            if( _dictionarySymbols[dictionary.Name].ContainsKey(newName) )
+                throw new Exception(String.Format(Messages.NameCheckUsedWithinDictionary,newName,dictionary.Name));
+        }
+
+
         // RENAME -- symbol-name new-symbol-name
         private void ProcessRename(string[] commands)
         {
             DataDictionaryObject symbol = GetSymbolFromName(commands[1],SymbolTypes.AllSupported);
+            DataDictionary dictionary = GetDataDictionaryFromSymbol(symbol);
+
             string oldName = symbol.Name;
             string newName = commands[2].ToUpper();
 
-            // check that the name is a valid name
-            if( !Names.IsValid(newName) )
-                throw new Exception(String.Format(Messages.RenameBadName,newName));
-
-            // check that a dictionary with the same name has not been loaded
-            if( _dictionaries.ContainsKey(newName) )
-                throw new Exception(String.Format(Messages.RenameNameUsedDictionary,newName,symbol.Name));
-
-            DataDictionary dictionary = GetDataDictionaryFromSymbol(symbol);
-
-            // check that the name does not already exist within the dictionary
-            if( _dictionarySymbols[dictionary.Name].ContainsKey(newName) )
-                throw new Exception(String.Format(Messages.RenameNameUsedWithinDictionary,newName,dictionary.Name));
+            CheckIfValidNewName(dictionary,newName);
 
             // a couple things if changing the name of a dictionary
             if( symbol == dictionary )
@@ -435,7 +440,107 @@ namespace Dictionary_Blender
             RefreshSymbolParents();
 
             SetOutputSuccess(String.Format(Messages.RenameSuccess,oldName,newName));
-        }        
+        }
+
+
+        // FLATTEN -- item-name
+        public void ProcessFlatten(string[] commands)
+        {
+            const string FlattenNameFormat = "{0}_{1}";
+            const string FlattenLabelFormat = "{0} ({1})";
+
+            Item item = (Item)GetSymbolFromName(commands[1],SymbolTypes.Item);
+
+            if( item.Occurrences == 1 )
+                throw new Exception(String.Format(Messages.FlattenMustHaveOccurrences,item.Name));
+
+            // make sure that all of the names (to be created) are valid and available
+            for( int i = -1; i < item.Subitems.Count; i++ )
+            {
+                Item thisItem = ( i == -1 ) ? item : item.Subitems[i];
+
+                for( int occ = 0; occ < item.Occurrences; occ++ )
+                {
+                    string newName = null;
+                    
+                    try
+                    {
+                        newName = String.Format(FlattenNameFormat,thisItem.Name,occ + 1);
+                        CheckIfValidNewName(item.ParentDictionary,newName);
+
+                        foreach( ValueSet vs in thisItem.ValueSets )
+                        {
+                            newName = String.Format(FlattenNameFormat,vs.Name,occ + 1);
+                            CheckIfValidNewName(item.ParentDictionary,newName);
+                        }
+                    }
+
+                    catch( Exception )
+                    {
+                        throw new Exception(String.Format(Messages.FlattenNameInvalid,item.Name,newName));
+                    }
+                }
+            }
+
+            List<Item> recordItems = item.ParentRecord.Items;            
+            int itemInsertionIndex = recordItems.IndexOf(item);
+            recordItems.RemoveAt(itemInsertionIndex);
+
+            // remove any subitems associated with the just removed item
+            for( int i = 0; i < item.Subitems.Count; i++ )
+                recordItems.RemoveAt(itemInsertionIndex);
+
+            for( int occ = 0; occ < item.Occurrences; occ++ ) 
+            {
+                for( int i = -1; i < item.Subitems.Count; i++ )
+                {
+                    Item thisItem = ( i == -1 ) ? item : item.Subitems[i];
+                    Item newItem = new Item(thisItem.ParentRecord);
+
+                    newItem.Name = String.Format(FlattenNameFormat,thisItem.Name,occ + 1); 
+
+                    // add an occurrence number (or label if it exists)
+                    newItem.Label = String.Format(FlattenLabelFormat,thisItem.Label,
+                        ( occ < item.OccurrenceLabels.Count ) ? item.OccurrenceLabels[occ] : ( occ + 1 ).ToString());
+
+                    newItem.Start = thisItem.Start + item.Length * occ;
+                    newItem.Occurrences = 1;
+
+                    // most of the item is a direct copy
+                    newItem.Note = thisItem.Note;
+                    newItem.Length = thisItem.Length;
+                    newItem.Numeric = thisItem.Numeric;
+                    newItem.Subitem = thisItem.Subitem;
+                    newItem.Decimal = thisItem.Decimal;
+                    newItem.DecChar = thisItem.DecChar;
+                    newItem.ZeroFill = thisItem.ZeroFill;
+
+                    // create linked value sets for each of the value sets
+                    // TODO: test
+                    foreach( ValueSet vs in thisItem.ValueSets )
+                    {
+                        ValueSet newValueSet = new ValueSet(newItem);
+                        
+                        newValueSet.Name = String.Format(FlattenNameFormat,vs.Name,occ + 1); 
+                        newValueSet.Label = String.Format(FlattenLabelFormat,vs.Label,
+                            ( occ < item.OccurrenceLabels.Count ) ? item.OccurrenceLabels[occ] : ( occ + 1 ).ToString());
+
+                        // create a new linked value set if it is not already linked
+                        if( vs.LinkID == Int32.MinValue )
+                            vs.LinkID = DataDictionaryWorker.GetNewValueSetLinkID(item.ParentDictionary);
+                        
+                        newValueSet.EstablishValueSetLink(vs,vs.LinkID);
+                    }
+
+                    recordItems.Insert(itemInsertionIndex++,newItem);
+                }
+            }
+
+            LoadDictionarySymbols(item.ParentDictionary);
+            RefreshSymbolParents();
+
+            SetOutputSuccess("TODO: message");
+        }
 
     }
 }
