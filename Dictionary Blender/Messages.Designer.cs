@@ -169,6 +169,15 @@ namespace Dictionary_Blender {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0}, with {1} occurrences, flattened to {2} items.
+        /// </summary>
+        internal static string FlattenSuccess {
+            get {
+                return ResourceManager.GetString("FlattenSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The label for {0} was changed to &quot;{1}&quot;.
         /// </summary>
         internal static string LabelModified {

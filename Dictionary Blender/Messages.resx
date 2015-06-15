@@ -153,6 +153,9 @@
   <data name="FlattenNameInvalid" xml:space="preserve">
     <value>Flattening {0} could not occur because the needed name {1} was not available</value>
   </data>
+  <data name="FlattenSuccess" xml:space="preserve">
+    <value>{0}, with {1} occurrences, flattened to {2} items</value>
+  </data>
   <data name="LabelModified" xml:space="preserve">
     <value>The label for {0} was changed to "{1}"</value>
   </data>

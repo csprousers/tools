@@ -379,6 +379,7 @@ namespace Dictionary_Blender
 
                 DataDictionaryWorker.CalculateItemPositions(dictionary);
                 DataDictionaryWorker.CalculateRecordLengths(dictionary);
+                DataDictionaryWorker.RemoveBrokenValueSetLinks(dictionary);
 
                 SetOutputSuccess(String.Format(Messages.RemoveItem,item.Name,record.Name));
             }
@@ -390,6 +391,8 @@ namespace Dictionary_Blender
                 dictionary = vs.ParentDictionary;
 
                 item.ValueSets.Remove(vs);
+                
+                DataDictionaryWorker.RemoveBrokenValueSetLinks(dictionary);
 
                 SetOutputSuccess(String.Format(Messages.RemoveValueSet,vs.Name,item.Name));
             }
@@ -490,6 +493,8 @@ namespace Dictionary_Blender
             for( int i = 0; i < item.Subitems.Count; i++ )
                 recordItems.RemoveAt(itemInsertionIndex);
 
+            int itemsAdded = 0;
+
             for( int occ = 0; occ < item.Occurrences; occ++ ) 
             {
                 for( int i = -1; i < item.Subitems.Count; i++ )
@@ -516,7 +521,6 @@ namespace Dictionary_Blender
                     newItem.ZeroFill = thisItem.ZeroFill;
 
                     // create linked value sets for each of the value sets
-                    // TODO: test
                     foreach( ValueSet vs in thisItem.ValueSets )
                     {
                         ValueSet newValueSet = new ValueSet(newItem);
@@ -530,16 +534,18 @@ namespace Dictionary_Blender
                             vs.LinkID = DataDictionaryWorker.GetNewValueSetLinkID(item.ParentDictionary);
                         
                         newValueSet.EstablishValueSetLink(vs,vs.LinkID);
+                        newItem.ValueSets.Add(newValueSet);
                     }
 
                     recordItems.Insert(itemInsertionIndex++,newItem);
+                    itemsAdded++;
                 }
             }
 
             LoadDictionarySymbols(item.ParentDictionary);
             RefreshSymbolParents();
 
-            SetOutputSuccess("TODO: message");
+            SetOutputSuccess(String.Format(Messages.FlattenSuccess,item.Name,item.Occurrences,itemsAdded));
         }
 
     }

@@ -118,5 +118,25 @@ namespace CSPro
             }
         }
 
+
+        public static void RemoveBrokenValueSetLinks(DataDictionary dictionary)
+        {
+            // the ValueSet will be set to null if more than one value set exists
+            Dictionary<int,ValueSet> links = new Dictionary<int,ValueSet>();
+
+            foreach( ValueSet vs in GetAllValueSets(dictionary) )
+            {
+                if( vs.LinkID != Int32.MinValue )
+                    links[vs.LinkID] = links.ContainsKey(vs.LinkID) ? null : vs;
+            }
+
+            // remove the broken links
+            foreach( var kp in links )
+            {
+                if( kp.Value != null )
+                    kp.Value.LinkID = Int32.MinValue;
+            }            
+        }
+
     }
 }
