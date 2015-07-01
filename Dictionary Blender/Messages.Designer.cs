@@ -250,6 +250,15 @@ namespace Dictionary_Blender {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The command {0} is unrecognized.
+        /// </summary>
+        internal static string ProcessorUnrecognizedCommandSpecify {
+            get {
+                return ResourceManager.GetString("ProcessorUnrecognizedCommandSpecify", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You cannot remove the IDs from your dictionary.
         /// </summary>
         internal static string RemoveIDsDisabled {
@@ -345,6 +354,51 @@ namespace Dictionary_Blender {
         internal static string SymbolNotFoundInDictionary {
             get {
                 return ResourceManager.GetString("SymbolNotFoundInDictionary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The item {0} has multiple occurrences so it cannot be unsubitemized.
+        /// </summary>
+        internal static string UnsubitemizeHasOccurrences {
+            get {
+                return ResourceManager.GetString("UnsubitemizeHasOccurrences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The item {0} has no subitems so it cannot be unsubitemized.
+        /// </summary>
+        internal static string UnsubitemizeNoSubitems {
+            get {
+                return ResourceManager.GetString("UnsubitemizeNoSubitems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The item {0} has overlapping subitems so it cannot be unsubitemized.
+        /// </summary>
+        internal static string UnsubitemizeOverlappingSubitems {
+            get {
+                return ResourceManager.GetString("UnsubitemizeOverlappingSubitems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The item {0} has a gap not filled by any subitems so it cannot be unsubitemized as part of a relative positioned dictionary.
+        /// </summary>
+        internal static string UnsubitemizeSubitemGap {
+            get {
+                return ResourceManager.GetString("UnsubitemizeSubitemGap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} unsubitemized.
+        /// </summary>
+        internal static string UnsubitemizeSuccess {
+            get {
+                return ResourceManager.GetString("UnsubitemizeSuccess", resourceCulture);
             }
         }
     }

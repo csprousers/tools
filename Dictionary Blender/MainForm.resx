@@ -129,7 +129,8 @@ RENAME &lt;dictionary,level,record,item,valueset&gt; &lt;name&gt;
 LABEL &lt;dictionary,level,record,item,valueset&gt; &lt;label&gt;
 REMOVE &lt;record,item,valueset&gt;
 
-FLATTEN &lt;item&gt;
+FLATTEN [UNSUBITEMIZE] &lt;item&gt;
+UNSUBITEMIZE &lt;item&gt;
 
 ADD &lt;level&gt; &lt;record&gt; [-&lt;record&gt;]
 ADD &lt;record&gt; &lt;item&gt; [-&lt;item&gt;]

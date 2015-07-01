@@ -180,6 +180,9 @@
   <data name="ProcessorUnrecognizedCommand" xml:space="preserve">
     <value>Unrecognized command</value>
   </data>
+  <data name="ProcessorUnrecognizedCommandSpecify" xml:space="preserve">
+    <value>The command {0} is unrecognized</value>
+  </data>
   <data name="RemoveIDsDisabled" xml:space="preserve">
     <value>You cannot remove the IDs from your dictionary</value>
   </data>
@@ -212,5 +215,20 @@
   </data>
   <data name="SymbolNotFoundInDictionary" xml:space="preserve">
     <value>No symbol named {0} is contained in the dictionary {1}</value>
+  </data>
+  <data name="UnsubitemizeHasOccurrences" xml:space="preserve">
+    <value>The item {0} has multiple occurrences so it cannot be unsubitemized</value>
+  </data>
+  <data name="UnsubitemizeNoSubitems" xml:space="preserve">
+    <value>The item {0} has no subitems so it cannot be unsubitemized</value>
+  </data>
+  <data name="UnsubitemizeOverlappingSubitems" xml:space="preserve">
+    <value>The item {0} has overlapping subitems so it cannot be unsubitemized</value>
+  </data>
+  <data name="UnsubitemizeSubitemGap" xml:space="preserve">
+    <value>The item {0} has a gap not filled by any subitems so it cannot be unsubitemized as part of a relative positioned dictionary</value>
+  </data>
+  <data name="UnsubitemizeSuccess" xml:space="preserve">
+    <value>{0} unsubitemized</value>
   </data>
 </root>

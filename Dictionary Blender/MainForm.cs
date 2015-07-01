@@ -30,8 +30,9 @@ namespace Dictionary_Blender
             _functions.Add("LABEL",new BlenderFunction(ProcessLabel,2));
             _functions.Add("REMOVE",new BlenderFunction(ProcessRemove,1));
             _functions.Add("RENAME",new BlenderFunction(ProcessRename,2));
-            _functions.Add("FLATTEN",new BlenderFunction(ProcessFlatten,1));
+            _functions.Add("FLATTEN",new BlenderFunction(ProcessFlatten,1,2));
             _functions.Add("RUN",new BlenderFunction(ProcessRun,1));
+            _functions.Add("UNSUBITEMIZE",new BlenderFunction(ProcessUnsubitemize,1));
         }
 
         public MainForm()
@@ -458,19 +459,55 @@ namespace Dictionary_Blender
         }
 
 
-        // FLATTEN -- item-name
+        void CheckCanUnsubitemize(Item item)
+        {
+            if( item.Subitems.Count == 0 )
+                throw new Exception(String.Format(Messages.UnsubitemizeNoSubitems,item.Name));
+
+            int startingPos = item.Start;
+            bool hasGap = false;
+
+            foreach( Item subitem in item.Subitems )
+            {
+                if( subitem.Start < startingPos )
+                    throw new Exception(String.Format(Messages.UnsubitemizeOverlappingSubitems,item.Name));
+
+                else if( subitem.Start != startingPos )
+                    hasGap = true;
+
+                startingPos = subitem.Start + subitem.Length;
+            }
+
+            if( item.ParentDictionary.RelativePositioning && hasGap )
+                throw new Exception(String.Format(Messages.UnsubitemizeSubitemGap,item.Name));
+        }
+
+        // FLATTEN -- [UNSUBITEMIZE] item-name
         public void ProcessFlatten(string[] commands)
         {
             const string FlattenNameFormat = "{0}_{1}";
             const string FlattenLabelFormat = "{0} ({1})";
 
-            Item item = (Item)GetSymbolFromName(commands[1],SymbolTypes.Item);
+            bool createItem = true;
+
+            if( commands.Length == 3 )
+            {
+                if( !commands[1].Equals("UNSUBITEMIZE",StringComparison.InvariantCultureIgnoreCase) )
+                    throw new Exception(String.Format(Messages.ProcessorUnrecognizedCommandSpecify,commands[1]));
+
+                createItem = false;
+            }
+
+            Item item = (Item)GetSymbolFromName(commands[createItem ? 1: 2],SymbolTypes.Item);
+
+            if( !createItem )
+                CheckCanUnsubitemize(item);
 
             if( item.Occurrences == 1 )
                 throw new Exception(String.Format(Messages.FlattenMustHaveOccurrences,item.Name));
 
             // make sure that all of the names (to be created) are valid and available
-            for( int i = -1; i < item.Subitems.Count; i++ )
+            for( int i = createItem ? - 1 : 0; i < item.Subitems.Count; i++ )
             {
                 Item thisItem = ( i == -1 ) ? item : item.Subitems[i];
 
@@ -509,10 +546,21 @@ namespace Dictionary_Blender
 
             for( int occ = 0; occ < item.Occurrences; occ++ ) 
             {
-                for( int i = -1; i < item.Subitems.Count; i++ )
+                Item firstItem = null;
+
+                for( int i = createItem ? -1 : 0; i < item.Subitems.Count; i++ )
                 {
                     Item thisItem = ( i == -1 ) ? item : item.Subitems[i];
                     Item newItem = new Item(thisItem.ParentRecord);
+
+                    if( createItem )
+                    {
+                        if( firstItem == null )
+                            firstItem = newItem;
+
+                        else
+                            firstItem.Subitems.Add(newItem);
+                    }
 
                     newItem.Name = String.Format(FlattenNameFormat,thisItem.Name,occ + 1); 
 
@@ -527,7 +575,7 @@ namespace Dictionary_Blender
                     newItem.Note = thisItem.Note;
                     newItem.Length = thisItem.Length;
                     newItem.Numeric = thisItem.Numeric;
-                    newItem.Subitem = thisItem.Subitem;
+                    newItem.Subitem = createItem ? thisItem.Subitem : false;
                     newItem.Decimal = thisItem.Decimal;
                     newItem.DecChar = thisItem.DecChar;
                     newItem.ZeroFill = thisItem.ZeroFill;
@@ -609,6 +657,28 @@ namespace Dictionary_Blender
         private void ProcessRun(string[] commands)
         {
             RunScript(commands[1]);
+        }
+
+
+        // UNSUBITEMIZE -- item-name
+        private void ProcessUnsubitemize(string[] commands)
+        {
+            Item item = (Item)GetSymbolFromName(commands[1],SymbolTypes.Item);
+
+            if( item.Occurrences != 1 )
+                throw new Exception(String.Format(Messages.UnsubitemizeHasOccurrences,item.Name));
+
+            CheckCanUnsubitemize(item);
+
+            item.ParentRecord.Items.Remove(item);
+
+            foreach( Item subitem in item.Subitems )
+                subitem.Subitem = false;
+
+            LoadDictionarySymbols(item.ParentDictionary);
+            RefreshSymbolParents();
+
+            SetOutputSuccess(String.Format(Messages.UnsubitemizeSuccess,item.Name));
         }
 
 

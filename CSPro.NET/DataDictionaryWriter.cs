@@ -160,8 +160,9 @@ namespace CSPro
                 SaveOption(DataDictionaryElements.RECORD_MAX,record.MaxOccs);
 
             SaveOption(DataDictionaryElements.RECORD_LEN,record.Length);
-
-            SaveOccurrenceLabels(record.OccurrenceLabels);
+            
+            if( record.MaxOccs != 1 )
+                SaveOccurrenceLabels(record.OccurrenceLabels);
 
             foreach( Item item in record.Items )
                 SaveItem(item);
@@ -194,7 +195,8 @@ namespace CSPro
             if( item.ZeroFill )
                 SaveOption(DataDictionaryElements.ITEM_ZEROFILL,item.ZeroFill);
 
-            SaveOccurrenceLabels(item.OccurrenceLabels);
+            if( item.Occurrences != 1 )
+                SaveOccurrenceLabels(item.OccurrenceLabels);
 
             foreach( ValueSet vs in item.ValueSets )
                 SaveValueSet(vs);
