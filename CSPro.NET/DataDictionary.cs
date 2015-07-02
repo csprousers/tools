@@ -196,10 +196,10 @@ namespace CSPro
             LinkID = Int32.MinValue;
         }
 
-        public void EstablishValueSetLink(ValueSet vs,int linkID)
+        public void EstablishValueSetLink(ValueSet vs)
         {
             _values = vs._values;
-            LinkID = linkID;
+            LinkID = vs.LinkID;
         }
 
         public void AddValue(Value value)
@@ -261,6 +261,12 @@ namespace CSPro
         {
             From = vp.From;
             To = vp.To;
+        }
+
+        public ValuePair(string from,string to = "")
+        {
+            From = from;
+            To = to;
         }
     }
 

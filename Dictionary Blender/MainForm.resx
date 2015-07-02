@@ -131,6 +131,7 @@ REMOVE &lt;record,item,valueset&gt;
 
 FLATTEN [UNSUBITEMIZE] &lt;item&gt;
 UNSUBITEMIZE &lt;item&gt;
+UNCHECKBOXIZE &lt;item&gt;
 
 ADD &lt;level&gt; &lt;record&gt; [-&lt;record&gt;]
 ADD &lt;record&gt; &lt;item&gt; [-&lt;item&gt;]

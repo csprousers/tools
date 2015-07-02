@@ -216,6 +216,18 @@
   <data name="SymbolNotFoundInDictionary" xml:space="preserve">
     <value>No symbol named {0} is contained in the dictionary {1}</value>
   </data>
+  <data name="UncheckboxizedNotValidCheckbox" xml:space="preserve">
+    <value>{0} cannot be uncheckboxized because the value set {1} does not represent a valid checkbox (the length of each checkbox, {2}, does not evenly divide in the item's length, {3})</value>
+  </data>
+  <data name="UncheckboxizedNoValueSet" xml:space="preserve">
+    <value>{0} must have a value set defined in order to be uncheckboxized</value>
+  </data>
+  <data name="UncheckboxizedSuccess" xml:space="preserve">
+    <value>{0} uncheckboxized into {1} items</value>
+  </data>
+  <data name="UncheckboxizeNotAlpha" xml:space="preserve">
+    <value>{0} is not an alpha item so it can not be uncheckboxized</value>
+  </data>
   <data name="UnsubitemizeHasOccurrences" xml:space="preserve">
     <value>The item {0} has multiple occurrences so it cannot be unsubitemized</value>
   </data>
@@ -230,5 +242,8 @@
   </data>
   <data name="UnsubitemizeSuccess" xml:space="preserve">
     <value>{0} unsubitemized</value>
+  </data>
+  <data name="UnsubitemizeNameInvalid" xml:space="preserve">
+    <value>Unsubitemizing {0} could not occur because the needed name {1} was not available</value>
   </data>
 </root>

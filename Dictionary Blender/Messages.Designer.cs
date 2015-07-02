@@ -358,11 +358,56 @@ namespace Dictionary_Blender {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} cannot be uncheckboxized because the value set {1} does not represent a valid checkbox (the length of each checkbox, {2}, does not evenly divide in the item&apos;s length, {3}).
+        /// </summary>
+        internal static string UncheckboxizedNotValidCheckbox {
+            get {
+                return ResourceManager.GetString("UncheckboxizedNotValidCheckbox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} must have a value set defined in order to be uncheckboxized.
+        /// </summary>
+        internal static string UncheckboxizedNoValueSet {
+            get {
+                return ResourceManager.GetString("UncheckboxizedNoValueSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} uncheckboxized into {1} items.
+        /// </summary>
+        internal static string UncheckboxizedSuccess {
+            get {
+                return ResourceManager.GetString("UncheckboxizedSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} is not an alpha item so it can not be uncheckboxized.
+        /// </summary>
+        internal static string UncheckboxizeNotAlpha {
+            get {
+                return ResourceManager.GetString("UncheckboxizeNotAlpha", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The item {0} has multiple occurrences so it cannot be unsubitemized.
         /// </summary>
         internal static string UnsubitemizeHasOccurrences {
             get {
                 return ResourceManager.GetString("UnsubitemizeHasOccurrences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unsubitemizing {0} could not occur because the needed name {1} was not available.
+        /// </summary>
+        internal static string UnsubitemizeNameInvalid {
+            get {
+                return ResourceManager.GetString("UnsubitemizeNameInvalid", resourceCulture);
             }
         }
         

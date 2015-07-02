@@ -33,6 +33,7 @@ namespace Dictionary_Blender
             _functions.Add("FLATTEN",new BlenderFunction(ProcessFlatten,1,2));
             _functions.Add("RUN",new BlenderFunction(ProcessRun,1));
             _functions.Add("UNSUBITEMIZE",new BlenderFunction(ProcessUnsubitemize,1));
+            _functions.Add("UNCHECKBOXIZE",new BlenderFunction(ProcessUncheckboxize,1));
         }
 
         public MainForm()
@@ -593,7 +594,7 @@ namespace Dictionary_Blender
                         if( vs.LinkID == Int32.MinValue )
                             vs.LinkID = DataDictionaryWorker.GetNewValueSetLinkID(item.ParentDictionary);
                         
-                        newValueSet.EstablishValueSetLink(vs,vs.LinkID);
+                        newValueSet.EstablishValueSetLink(vs);
                         newItem.ValueSets.Add(newValueSet);
                     }
 
@@ -679,6 +680,114 @@ namespace Dictionary_Blender
             RefreshSymbolParents();
 
             SetOutputSuccess(String.Format(Messages.UnsubitemizeSuccess,item.Name));
+        }
+
+
+        // UNCHECKBOXIZE -- item-name
+        private void ProcessUncheckboxize(string[] commands)
+        {
+            const string UncheckboxizeNameFormat = "{0}_{1}";
+            const string UncheckboxizeValueSetSuffix = "_VS1";
+
+            Item item = (Item)GetSymbolFromName(commands[1],SymbolTypes.Item);
+
+            if( !item.Alpha )
+                throw new Exception(String.Format(Messages.UncheckboxizeNotAlpha,item.Name));
+
+            if( item.ValueSets.Count == 0 )
+                throw new Exception(String.Format(Messages.UncheckboxizedNoValueSet,item.Name));
+
+            List<Value> checkboxValues = item.ValueSets[0].Values;
+            int maxValueWidth = 0;
+
+            foreach( Value value in checkboxValues )
+                maxValueWidth = Math.Max(maxValueWidth,value.Pairs[0].From.Trim().Length);
+
+            if( maxValueWidth == 0 || item.Length % maxValueWidth != 0 )
+                throw new Exception(String.Format(Messages.UncheckboxizedNotValidCheckbox,item.Name,item.ValueSets[0].Name,maxValueWidth,item.Length));
+
+            int numCheckboxes = item.Length / maxValueWidth;
+
+            // make sure that all of the names (to be created) are valid and available
+            for( int occ = 0; occ < numCheckboxes; occ++ )
+            {
+                string newName = null;
+
+                try
+                {
+                    newName = String.Format(UncheckboxizeNameFormat,item.Name,occ + 1);
+                    CheckIfValidNewName(item.ParentDictionary,newName);
+
+                    newName = newName + UncheckboxizeValueSetSuffix;
+                    CheckIfValidNewName(item.ParentDictionary,newName);
+                }
+
+                catch( Exception )
+                {
+                    throw new Exception(String.Format(Messages.UnsubitemizeNameInvalid,item.Name,newName));
+                }
+            }
+
+            // remove the old item
+            int itemIndex = item.ParentRecord.Items.IndexOf(item);
+            item.ParentRecord.Items.RemoveAt(itemIndex);
+
+            // create the new items
+            ValueSet baseVS = null;
+
+            for( int occ = 0; occ < numCheckboxes; occ++ )
+            {
+                Item newItem = new Item(item.ParentRecord);
+                newItem.ParentRecord.Items.Insert(itemIndex + occ,newItem);
+                
+                newItem.Name = String.Format(UncheckboxizeNameFormat,item.Name,occ + 1);
+                newItem.Label = occ < checkboxValues.Count ? String.Format("{0} ({1})",item.Label,checkboxValues[occ].Label) : item.Label;
+
+                newItem.Start = item.Start + maxValueWidth * occ;
+                newItem.Occurrences = 1;
+
+                newItem.Note = item.Note;
+                newItem.Length = maxValueWidth;
+                newItem.Numeric = true;
+                newItem.Subitem = item.Subitem;
+                newItem.ZeroFill = item.ParentDictionary.ZeroFillDefault;
+
+                ValueSet vs = null;
+
+                // add the value set
+                if( baseVS == null )
+                {
+                    Value uncheckedValue = new Value();
+                    uncheckedValue.Label = "Unchecked";
+                    uncheckedValue.Pairs.Add(new ValuePair("0"));
+
+                    Value checkedValue = new Value();
+                    checkedValue.Label = "Checked";
+                    checkedValue.Pairs.Add(new ValuePair("1"));
+
+                    baseVS = new ValueSet(newItem);
+                    baseVS.AddValue(uncheckedValue);
+                    baseVS.AddValue(checkedValue);
+
+                    vs = baseVS;
+                }
+
+                else
+                {
+                    if( baseVS.LinkID == Int32.MinValue )
+                        baseVS.LinkID = DataDictionaryWorker.GetNewValueSetLinkID(item.ParentDictionary);
+
+                    vs = new ValueSet(newItem);
+                    vs.EstablishValueSetLink(baseVS);
+                }
+
+                vs.Name = String.Format(UncheckboxizeNameFormat,item.Name,occ + 1) + UncheckboxizeValueSetSuffix;
+                vs.Label = newItem.Label;
+
+                newItem.AddValueSet(vs);
+            }
+
+            SetOutputSuccess(String.Format(Messages.UncheckboxizedSuccess,item.Name,numCheckboxes));
         }
 
 

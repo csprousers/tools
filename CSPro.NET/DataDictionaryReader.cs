@@ -407,7 +407,7 @@ namespace CSPro
                     int linkID = Int32.Parse(value,CultureInfo.InvariantCulture);
 
                     if( _vsLinks.ContainsKey(linkID) )
-                        _valueset.EstablishValueSetLink(_vsLinks[linkID],linkID);
+                        _valueset.EstablishValueSetLink(_vsLinks[linkID]);
 
                     else
                     {
