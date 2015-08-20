@@ -614,6 +614,7 @@ namespace Dictionary_Blender
         {
             int commandsProcessed = 0;
             bool ranToCompletion = false;
+            string storedWorkingDirectory = Directory.GetCurrentDirectory();
 
             try
             {
@@ -621,6 +622,8 @@ namespace Dictionary_Blender
                 
                 if( !File.Exists(filename) )
                     throw new Exception(String.Format(Messages.FileNotExist,filename));
+
+                Directory.SetCurrentDirectory(Path.GetDirectoryName(filename));
 
                 string[] commands = File.ReadAllLines(filename);
                 
@@ -652,6 +655,8 @@ namespace Dictionary_Blender
 
             if( ranToCompletion )
                 SetOutputSuccess(String.Format(Messages.RunSuccess,commandsProcessed,filename));
+
+            Directory.SetCurrentDirectory(storedWorkingDirectory);
         }
 
         // RUN -- script-filename
