@@ -246,4 +246,7 @@
   <data name="UnsubitemizeNameInvalid" xml:space="preserve">
     <value>Unsubitemizing {0} could not occur because the needed name {1} was not available</value>
   </data>
+  <data name="PrefixSuccess" xml:space="preserve">
+    <value>{0} prefixed with {1}</value>
+  </data>
 </root>

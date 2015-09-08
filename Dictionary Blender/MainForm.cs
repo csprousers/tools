@@ -33,7 +33,8 @@ namespace Dictionary_Blender
             _functions.Add("FLATTEN",new BlenderFunction(ProcessFlatten,1,2));
             _functions.Add("RUN",new BlenderFunction(ProcessRun,1));
             _functions.Add("UNSUBITEMIZE",new BlenderFunction(ProcessUnsubitemize,1));
-            _functions.Add("UNCHECKBOXIZE",new BlenderFunction(ProcessUncheckboxize,1));
+            _functions.Add("UNCHECKBOXIZE", new BlenderFunction(ProcessUncheckboxize, 1));
+            _functions.Add("PREFIX_NAMES", new BlenderFunction(ProcessPrefixNames, 2));
         }
 
         public MainForm()
@@ -795,6 +796,73 @@ namespace Dictionary_Blender
             SetOutputSuccess(String.Format(Messages.UncheckboxizedSuccess,item.Name,numCheckboxes));
         }
 
+        // PREFIX_NAMES -- symbol prefix
+        private void ProcessPrefixNames(string[] commands)
+        {
+            DataDictionaryObject symbol = GetSymbolFromName(commands[1], SymbolTypes.AllSupported);
+            DataDictionary dictionary = GetDataDictionaryFromSymbol(symbol);
+
+            // Only supports dictionaries for now
+            if (symbol != dictionary) {
+                throw new Exception(String.Format(Messages.SymbolNotAllowedType, symbol.Name));
+            }
+
+            string prefix = commands[2];
+
+            string oldName = symbol.Name;
+            string newName = prefix + symbol.Name;
+
+            CheckIfValidNewName(dictionary, newName);
+
+            dictionary.Levels.ForEach(l => PrefixLevel(dictionary, prefix, l));
+
+            // a couple things if changing the name of a dictionary
+            if (symbol == dictionary)
+            {
+                _dictionaries.Remove(dictionary.Name);
+                _dictionarySymbols.Remove(dictionary.Name);
+
+                _dictionaries.Add(newName, dictionary);
+            }
+
+            // change the name
+            symbol.Name = newName;
+
+            LoadDictionarySymbols(dictionary);
+            RefreshSymbolParents();
+
+            SetOutputSuccess(String.Format(Messages.PrefixSuccess, oldName, prefix));
+        }
+
+        private void PrefixDictObjectName(DataDictionary dict, string prefix, DataDictionaryObject ddo)
+        {
+            string oldName = ddo.Name;
+            string newName = prefix + ddo.Name;
+
+            CheckIfValidNewName(dict, newName);
+
+            // change the name
+            ddo.Name = newName;
+        }
+
+        private void PrefixLevel(DataDictionary dict, string prefix, Level l)
+        {
+            PrefixDictObjectName(dict, prefix, l);
+            l.IDs.Items.ForEach(i => PrefixItem(dict, prefix, i));
+            l.Records.ForEach(r => PrefixRecord(dict, prefix, r));
+        }
+
+        private void PrefixRecord(DataDictionary dict, string prefix, Record r)
+        {
+            PrefixDictObjectName(dict, prefix, r);
+            r.Items.ForEach(i => PrefixItem(dict, prefix, i));
+        }
+
+        private void PrefixItem(DataDictionary dict, string prefix, Item i)
+        {
+            PrefixDictObjectName(dict, prefix, i);
+            i.ValueSets.ForEach(vs => PrefixDictObjectName(dict, prefix, vs));
+        }
 
     }
 }
