@@ -85,11 +85,33 @@ namespace CSPro
             return note + value;
         }
 
+        private static void ParseLabel(MultipleLanguageLabel label,string value)
+        {
+            int languageIndex = 0;
+            int pipePos;
+
+            while( ( pipePos = value.IndexOf(DataDictionaryElements.DICT_LABEL_LANGUAGE_SEPARATOR) ) >= 0 )
+            {
+                label.SetLabel(value.Substring(0,pipePos),languageIndex);
+                value = value.Substring(pipePos + 1);
+                languageIndex++;
+            }
+
+            label.SetLabel(value,languageIndex);
+
+            // any blank labels should take the value from the first label
+            for( int i = 1; i <= languageIndex; i++ )
+            {
+                if( String.IsNullOrEmpty(label.GetLabel(i)) )
+                    label.SetLabel(label.GetLabel(0),i);
+            }
+        }
+
         private static bool AssignSharedComponents(DataDictionaryObject dictObject,string argument,string value)
         {
             if( argument.Equals(DataDictionaryElements.DICT_LABEL,StringComparison.InvariantCultureIgnoreCase) )
             {
-                dictObject.Label = value;
+                ParseLabel(dictObject,value);
                 return true;
             }
 
@@ -132,6 +154,9 @@ namespace CSPro
 
                         if( line.Equals(DataDictionaryElements.DICT_HEADER,StringComparison.InvariantCultureIgnoreCase) )
                             prevLineToHandle = ddr.LoadDictionary();
+
+                        else if( line.Equals(DataDictionaryElements.DICT_LANGUAGES,StringComparison.InvariantCultureIgnoreCase) )
+                            prevLineToHandle = ddr.LoadLanguages();
 
                         else if( line.Equals(DataDictionaryElements.DICT_LEVEL,StringComparison.InvariantCultureIgnoreCase) )
                             prevLineToHandle = ddr.LoadLevel();
@@ -207,6 +232,30 @@ namespace CSPro
 
                 else
                     throw new DataDictionaryReaderException(line);
+            }
+
+            return line;
+        }
+
+        private string LoadLanguages()
+        {
+            _dictionary.Languages.Clear(); // remove the default language
+
+            string line;
+
+            while( ( line = ReadTrimmedLine() ) != null && !IsHeader(line) )
+            {
+                string argument,value;
+
+                ParseLine(line,out argument,out value);
+
+                foreach( Language language in _dictionary.Languages )
+                {
+                    if( language.Name.Equals(argument) )
+                        throw new DataDictionaryReaderException(line);
+                }
+
+                _dictionary.Languages.Add(new Language() { Name = argument, Label = value });
             }
 
             return line;
@@ -448,7 +497,7 @@ namespace CSPro
 
             if( semicolonPos == 0 )
             {
-                _vsValue.Label = line.Substring(1);
+                ParseLabel(_vsValue,line.Substring(1));
                 return;
             }
 
@@ -516,7 +565,7 @@ namespace CSPro
                 AddValues(line.Substring(semicolonPos));
 
             else
-                _vsValue.Label = "";
+                ParseLabel(_vsValue,"");
         }
 
         private string LoadRelation()

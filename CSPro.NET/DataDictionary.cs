@@ -8,17 +8,64 @@ using System.Collections.Generic;
 
 namespace CSPro
 {
-    public class DataDictionaryObject
+    public class Language
     {
-        public string Name { get; set; }
-        public string Label { get; set; }
-        public string Note { get; set; }
+        public string Name = "";
+        public string Label = "";
+    }
+
+    public class MultipleLanguageLabel
+    {
+        private int _languageIndex = 0;
+        private List<string> _labels = new List<string>() { "" };
+
+        private void EnsureLanguageSize(int languageIndex)
+        {
+            while( _labels.Count <= languageIndex )
+                _labels.Add(_labels[0]);
+        }
+
+        public void ChangeLanguage(int languageIndex)
+        {
+            EnsureLanguageSize(languageIndex);
+            _languageIndex = languageIndex;
+        }
+
+        public int NumberLanguages { get { return _labels.Count; } }
+
+        public string Label
+        {
+            get
+            {
+                return _labels[_languageIndex];
+            }
+
+            set
+            {
+                _labels[_languageIndex] = value;
+            }
+        }
+
+        public void SetLabel(string label,int languageIndex)
+        {
+            EnsureLanguageSize(languageIndex);
+            _labels[languageIndex] = label;
+        }
+
+        public string GetLabel(int languageIndex)
+        {
+            EnsureLanguageSize(languageIndex);
+            return _labels[languageIndex];
+        }
+    }
+
+    public class DataDictionaryObject : MultipleLanguageLabel
+    {        
+        public string Name = "";
+        public string Note = "";
 
         public DataDictionaryObject()
         {
-            Name = "";
-            Label = "";
-            Note = "";
         }
     }
 
@@ -26,6 +73,8 @@ namespace CSPro
     {
         private List<Level> _levels;
         private List<Relation> _relations;
+
+        public List<Language> Languages { get; set; }
 
         public List<Level> Levels { get { return _levels; } }
         public List<Relation> Relations { get { return _relations; } }
@@ -43,6 +92,9 @@ namespace CSPro
         {
             _levels = new List<Level>();
             _relations = new List<Relation>();
+
+            Languages = new List<Language>();
+            Languages.Add(new Language() { Name = "EN", Label = "English" });
 
             Version = CurrentVersion.Version;
             RecTypeStart = 0;
@@ -208,7 +260,7 @@ namespace CSPro
         }
     }
 
-    public class Value
+    public class Value : MultipleLanguageLabel
     {
         public enum Special { None, NotApplicable, Missing, Default }
 
@@ -216,7 +268,6 @@ namespace CSPro
 
         public List<ValuePair> Pairs { get { return _pairs; } }
 
-        public string Label { get; set; }
         public string Note { get; set; }
         public string ImageFilename { get; set; }
         public Special SpecialValue { get; set; }

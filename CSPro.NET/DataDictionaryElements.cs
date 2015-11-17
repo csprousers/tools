@@ -4,6 +4,7 @@ namespace CSPro
     internal class DataDictionaryElements
     {
         internal const string DICT_HEADER = "[Dictionary]";
+        internal const string DICT_LANGUAGES = "[Languages]";
         internal const string DICT_LEVEL = "[Level]";
         internal const string DICT_RECORD = "[Record]";
         internal const string DICT_IDITEMS = "[IdItems]";
@@ -12,6 +13,7 @@ namespace CSPro
         internal const string DICT_RELATION = "[Relation]";
 
         internal const string DICT_LABEL = "Label";
+        internal const char DICT_LABEL_LANGUAGE_SEPARATOR = '|';
         internal const string DICT_NAME = "Name";
         internal const string DICT_NOTE = "Note";
         internal const string DICT_NOTENEWLINE = @"\r\n";

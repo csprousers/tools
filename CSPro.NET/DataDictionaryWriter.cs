@@ -43,6 +43,8 @@ namespace CSPro
                 if( dictionary.UsingValueSetImages )
                     ddw.SaveOption(DataDictionaryElements.HEADER_VALUESETIMAGES,dictionary.UsingValueSetImages);
 
+                ddw.SaveLanguages(dictionary);
+
                 foreach( Level level in dictionary.Levels )
                     ddw.SaveLevel(level);
 
@@ -53,7 +55,7 @@ namespace CSPro
 
         private void SaveSharedComponents(DataDictionaryObject dictObject)
         {
-            SaveOption(DataDictionaryElements.DICT_LABEL,dictObject.Label);
+            SaveOption(DataDictionaryElements.DICT_LABEL,GetSaveLabelText(dictObject));
             SaveOption(DataDictionaryElements.DICT_NAME,dictObject.Name);
             SaveNote(dictObject.Note);
         }
@@ -125,6 +127,37 @@ namespace CSPro
         private void SaveOption(string argument,bool value)
         {
             _tw.WriteLine("{0}={1}",argument,value ? DataDictionaryElements.DICT_YES : DataDictionaryElements.DICT_NO);
+        }
+
+        private string GetSaveLabelText(MultipleLanguageLabel label)
+        {
+            string saveLabel = "";
+
+            for( int i = 0; i < label.NumberLanguages; i++ )
+            {
+                if( i == 0 )
+                    saveLabel = label.GetLabel(0);
+
+                else
+                {
+                    bool labelSameAsFirst = label.GetLabel(i).Equals(label.GetLabel(0));
+                    saveLabel = String.Format("{0}{1}{2}",saveLabel,DataDictionaryElements.DICT_LABEL_LANGUAGE_SEPARATOR,labelSameAsFirst ? "" : label.GetLabel(i));
+                }
+            }
+
+            return saveLabel;
+        }
+        
+        private void SaveLanguages(DataDictionary dictionary)
+        {
+            if( dictionary.Languages.Count > 1 )
+            {
+                _tw.WriteLine();
+                _tw.WriteLine(DataDictionaryElements.DICT_LANGUAGES);
+
+                foreach( Language language in dictionary.Languages )
+                    SaveOption(language.Name,language.Label);                
+            }
         }
 
         private void SaveLevel(Level level)
@@ -263,7 +296,7 @@ namespace CSPro
             }
 
             if( !String.IsNullOrWhiteSpace(value.Label) )
-                sb.AppendFormat(";{0}",value.Label);
+                sb.AppendFormat(";{0}",GetSaveLabelText(value));
 
             SaveOption(DataDictionaryElements.VALUE_VALUE,sb.ToString());
 

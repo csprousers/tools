@@ -3,6 +3,6 @@ namespace CSPro
 {
     internal class CurrentVersion
     {
-        internal const double Version = 6.1;
+        internal const double Version = 6.2;
     }
 }
