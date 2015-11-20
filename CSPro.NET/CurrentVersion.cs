@@ -1,8 +1,16 @@
 ﻿
 namespace CSPro
 {
-    internal class CurrentVersion
+    public class CurrentVersion
     {
-        internal const double Version = 6.2;
+        public const double Version = 6.2;
+
+        public static string VersionString
+        {
+            get
+            {
+                return string.Format("CSPro {0:F1}",Version);
+            }
+        }
     }
 }
