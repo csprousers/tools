@@ -12,8 +12,20 @@ namespace Excel2CSPro
             InitializeComponent();
         }
 
+        private void tabControlMain_SelectedIndexChanged(object sender,EventArgs e)
+        {
+            bool menuOptionsEnabled = ( tabControlMain.SelectedTab == tabPageExcel2CSPro );
+            menuItemNew.Enabled = menuOptionsEnabled;
+            menuItemOpen.Enabled = menuOptionsEnabled;
+            menuItemSave.Enabled = menuOptionsEnabled;
+            menuItemSaveAs.Enabled = menuOptionsEnabled;
+            menuItemCommandLine.Enabled = menuOptionsEnabled;
+        }
+
         private bool ConfirmExit()
         {
+            // TODO
+            WorkbookController.Close();
             return true;
         }
 

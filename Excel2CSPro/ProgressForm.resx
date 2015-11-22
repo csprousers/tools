@@ -117,73 +117,79 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CommandLineRequiresSpec" xml:space="preserve">
-    <value>You must create a specification in order to run this tool from the command line.</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="progressBar.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
   </data>
-  <data name="ConfirmCancelTask" xml:space="preserve">
-    <value>Are you sure that you would like to cancel the current operation?</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="progressBar.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 12</value>
   </data>
-  <data name="ExcelDefaultStartingRow" xml:space="preserve">
-    <value>2</value>
+  <data name="progressBar.Size" type="System.Drawing.Size, System.Drawing">
+    <value>675, 23</value>
   </data>
-  <data name="ExcelGroupTitle" xml:space="preserve">
-    <value>Excel File: {0}</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="progressBar.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
   </data>
-  <data name="ExcelNoData" xml:space="preserve">
-    <value>There was no data in the worksheet.</value>
+  <data name="&gt;&gt;progressBar.Name" xml:space="preserve">
+    <value>progressBar</value>
   </data>
-  <data name="ExcelIOError" xml:space="preserve">
-    <value>There was an error interacting with Excel: {0}</value>
+  <data name="&gt;&gt;progressBar.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ProgressBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="ExcelOpenFilter" xml:space="preserve">
-    <value>Excel Worksheets (*.xlsx;*.xlsm;*.xlsb;*.xls)|*.xlsx;*.xlsm;*.xlsb;*.xls</value>
+  <data name="&gt;&gt;progressBar.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="ExcelOpenTitle" xml:space="preserve">
-    <value>Select Excel Workbook</value>
+  <data name="&gt;&gt;progressBar.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
-  <data name="InvalidNameSuggestOther" xml:space="preserve">
-    <value>The name '{0}' is invalid. Do you want to use the suggested alternative, '{1}'?</value>
+  <data name="buttonCancel.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
   </data>
-  <data name="StartingRowInvalid" xml:space="preserve">
-    <value>The starting row is not a valid number.</value>
+  <data name="buttonCancel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>697, 11</value>
   </data>
-  <data name="StartingRowOutOfRange" xml:space="preserve">
-    <value>The starting row cannot be less than 1 or greater than {0}.</value>
+  <data name="buttonCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>75, 24</value>
   </data>
-  <data name="TitleReadingWorksheet" xml:space="preserve">
-    <value>Reading the Worksheet: {0}</value>
+  <data name="buttonCancel.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
   </data>
-  <data name="InvalidLength" xml:space="preserve">
-    <value>The length '{0}' is invalid.</value>
+  <data name="buttonCancel.Text" xml:space="preserve">
+    <value>Cancel</value>
   </data>
-  <data name="InvalidLengthAlpha" xml:space="preserve">
-    <value>An alpha item must have length between 1-{0}.</value>
+  <data name="&gt;&gt;buttonCancel.Name" xml:space="preserve">
+    <value>buttonCancel</value>
   </data>
-  <data name="InvalidLengthNumeric" xml:space="preserve">
-    <value>A numeric item must have length between 1-{0}.</value>
+  <data name="&gt;&gt;buttonCancel.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="InvalidLengthNumericDecimal" xml:space="preserve">
-    <value>A numeric item's decimal length must be between 1-{0}.</value>
+  <data name="&gt;&gt;buttonCancel.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
-  <data name="InvalidLengthZero" xml:space="preserve">
-    <value>The length cannot be 0.</value>
+  <data name="&gt;&gt;buttonCancel.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
-  <data name="InvalidName" xml:space="preserve">
-    <value>The name '{0}' is invalid.</value>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
   </data>
-  <data name="InvalidNumberIds" xml:space="preserve">
-    <value>A dictionary must have at least one ID item.</value>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>784, 53</value>
   </data>
-  <data name="CSProFileFilter" xml:space="preserve">
-    <value>CSPro Dictionary (*.dcf)|*.dcf</value>
+  <data name="$this.StartPosition" type="System.Windows.Forms.FormStartPosition, System.Windows.Forms">
+    <value>CenterParent</value>
   </data>
-  <data name="CSProSaveTitle" xml:space="preserve">
-    <value>Save CSPro Dictionary</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>...</value>
   </data>
-  <data name="AlreadyUsedName" xml:space="preserve">
-    <value>The name {0} has already been used in this dictionary.</value>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>ProgressForm</value>
   </data>
-  <data name="InvalidIdNumericDecimal" xml:space="preserve">
-    <value>A numeric item with a decimal component cannot be an ID item.</value>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

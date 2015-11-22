@@ -61,11 +61,209 @@ namespace Excel2CSPro {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The name {0} has already been used in this dictionary..
+        /// </summary>
+        internal static string AlreadyUsedName {
+            get {
+                return ResourceManager.GetString("AlreadyUsedName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You must create a specification in order to run this tool from the command line..
         /// </summary>
         internal static string CommandLineRequiresSpec {
             get {
                 return ResourceManager.GetString("CommandLineRequiresSpec", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure that you would like to cancel the current operation?.
+        /// </summary>
+        internal static string ConfirmCancelTask {
+            get {
+                return ResourceManager.GetString("ConfirmCancelTask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CSPro Dictionary (*.dcf)|*.dcf.
+        /// </summary>
+        internal static string CSProFileFilter {
+            get {
+                return ResourceManager.GetString("CSProFileFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save CSPro Dictionary.
+        /// </summary>
+        internal static string CSProSaveTitle {
+            get {
+                return ResourceManager.GetString("CSProSaveTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2.
+        /// </summary>
+        internal static string ExcelDefaultStartingRow {
+            get {
+                return ResourceManager.GetString("ExcelDefaultStartingRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Excel File: {0}.
+        /// </summary>
+        internal static string ExcelGroupTitle {
+            get {
+                return ResourceManager.GetString("ExcelGroupTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was an error interacting with Excel: {0}.
+        /// </summary>
+        internal static string ExcelIOError {
+            get {
+                return ResourceManager.GetString("ExcelIOError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was no data in the worksheet..
+        /// </summary>
+        internal static string ExcelNoData {
+            get {
+                return ResourceManager.GetString("ExcelNoData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Excel Worksheets (*.xlsx;*.xlsm;*.xlsb;*.xls)|*.xlsx;*.xlsm;*.xlsb;*.xls.
+        /// </summary>
+        internal static string ExcelOpenFilter {
+            get {
+                return ResourceManager.GetString("ExcelOpenFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Excel Workbook.
+        /// </summary>
+        internal static string ExcelOpenTitle {
+            get {
+                return ResourceManager.GetString("ExcelOpenTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A numeric item with a decimal component cannot be an ID item..
+        /// </summary>
+        internal static string InvalidIdNumericDecimal {
+            get {
+                return ResourceManager.GetString("InvalidIdNumericDecimal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The length &apos;{0}&apos; is invalid..
+        /// </summary>
+        internal static string InvalidLength {
+            get {
+                return ResourceManager.GetString("InvalidLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An alpha item must have length between 1-{0}..
+        /// </summary>
+        internal static string InvalidLengthAlpha {
+            get {
+                return ResourceManager.GetString("InvalidLengthAlpha", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A numeric item must have length between 1-{0}..
+        /// </summary>
+        internal static string InvalidLengthNumeric {
+            get {
+                return ResourceManager.GetString("InvalidLengthNumeric", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A numeric item&apos;s decimal length must be between 1-{0}..
+        /// </summary>
+        internal static string InvalidLengthNumericDecimal {
+            get {
+                return ResourceManager.GetString("InvalidLengthNumericDecimal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The length cannot be 0..
+        /// </summary>
+        internal static string InvalidLengthZero {
+            get {
+                return ResourceManager.GetString("InvalidLengthZero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name &apos;{0}&apos; is invalid..
+        /// </summary>
+        internal static string InvalidName {
+            get {
+                return ResourceManager.GetString("InvalidName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name &apos;{0}&apos; is invalid. Do you want to use the suggested alternative, &apos;{1}&apos;?.
+        /// </summary>
+        internal static string InvalidNameSuggestOther {
+            get {
+                return ResourceManager.GetString("InvalidNameSuggestOther", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A dictionary must have at least one ID item..
+        /// </summary>
+        internal static string InvalidNumberIds {
+            get {
+                return ResourceManager.GetString("InvalidNumberIds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The starting row is not a valid number..
+        /// </summary>
+        internal static string StartingRowInvalid {
+            get {
+                return ResourceManager.GetString("StartingRowInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The starting row cannot be less than 1 or greater than {0}..
+        /// </summary>
+        internal static string StartingRowOutOfRange {
+            get {
+                return ResourceManager.GetString("StartingRowOutOfRange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reading the Worksheet: {0}.
+        /// </summary>
+        internal static string TitleReadingWorksheet {
+            get {
+                return ResourceManager.GetString("TitleReadingWorksheet", resourceCulture);
             }
         }
     }

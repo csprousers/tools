@@ -46,6 +46,7 @@
     <Compile Include="DataDictionaryReader.cs" />
     <Compile Include="DataDictionaryWorker.cs" />
     <Compile Include="DataDictionaryWriter.cs" />
+    <Compile Include="Defines.cs" />
     <Compile Include="Errors.Designer.cs">
       <DependentUpon>Errors.resx</DependentUpon>
       <DesignTime>True</DesignTime>
