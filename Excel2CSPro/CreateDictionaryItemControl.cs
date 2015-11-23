@@ -21,7 +21,6 @@ namespace Excel2CSPro
                 checkBoxItemCreateValueSet.Text = String.Format(checkBoxItemCreateValueSet.Text,_columnAnalysis.Values.Count);
             }
 
-            checkBoxIncludeItem.Text = _columnAnalysis.ColumnAddress;
             textBoxItemName.Text = CSPro.Names.CreateFromLabel(_columnAnalysis.HeaderText);
             textBoxItemLength.Text = _columnAnalysis.MaximumLength.ToString();
 
@@ -44,10 +43,10 @@ namespace Excel2CSPro
         {
             bool isNumeric = checkBoxItemNumeric.Checked;
 
-            textBoxItemLength.Visible = !isNumeric;
+            textBoxItemLength.Enabled = !isNumeric;
 
-            textBoxItemBeforeDecLength.Visible = isNumeric;
-            textBoxItemAfterDecLength.Visible = isNumeric;
+            textBoxItemBeforeDecLength.Enabled = isNumeric;
+            textBoxItemAfterDecLength.Enabled = isNumeric;
 
             checkBoxItemCreateValueSet.Visible = isNumeric && _canCreateValueSet;
         }

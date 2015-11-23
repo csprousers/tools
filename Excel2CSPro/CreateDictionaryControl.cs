@@ -34,7 +34,7 @@ namespace Excel2CSPro
             {
                 try
                 {
-                    _workbookController.OpenWorksheet(ofd.FileName);
+                    _workbookController.OpenWorkbook(ofd.FileName);
 
                     List<string> worksheetNames = _workbookController.WorksheetNames;
 
@@ -256,6 +256,9 @@ namespace Excel2CSPro
                     cdicForMessages = cdic;
 
                     CreateDictionaryItemControl.ItemSelections selections = cdic.Selections;
+
+                    if( !selections.IncludeItem )
+                        continue;
 
                     if( !CSPro.Names.IsValid(selections.Name) )
                         throw new Exception(String.Format(Messages.InvalidName,selections.Name));

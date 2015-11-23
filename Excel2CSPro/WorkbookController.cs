@@ -7,33 +7,56 @@ namespace Excel2CSPro
     class WorkbookController
     {
         private static Excel.Application _application = null;
+        private static List<Excel.Workbook> _openWorkbooks = new List<Excel.Workbook>();
         private Excel.Workbook _workbook = null;
         private Excel.Worksheet _worksheet = null;
 
         public static void Close()
         {
             if( _application != null )
-                _application.Quit();
+            {
+                // ignore any errors closing the workbooks or Excel
+                try
+                {
+                    for( int i = _openWorkbooks.Count - 1; i >= 0; i-- )
+                        CloseWorkbook(_openWorkbooks[i]);
+                }
+
+                catch( Exception )
+                {
+                }
+
+                try
+                {
+                    _application.Quit();
+                }
+
+                catch( Exception )
+                {
+                }
+            }
         }
 
-        public void OpenWorksheet(string filename)
+        public void OpenWorkbook(string filename)
         {
-            CloseWorksheet();
+            if( _workbook != null )
+            {
+                CloseWorkbook(_workbook);
+                _workbook = null;
+            }
 
             if( _application == null )
                 _application = new Excel.Application();
 
             _workbook = _application.Workbooks.Open(filename,Type.Missing,true);
+            _openWorkbooks.Add(_workbook);
         }
 
-        public void CloseWorksheet()
+        public static void CloseWorkbook(Excel.Workbook workbook)
         {
-            if( _workbook != null )
-            {
-                _workbook.Saved = true; // disable any prompts to save the data
-                _workbook.Close();
-                _workbook = null;
-            }
+            workbook.Saved = true; // disable any prompts to save the data
+            workbook.Close();
+            _openWorkbooks.Remove(workbook);
         }
 
         public List<string> WorksheetNames

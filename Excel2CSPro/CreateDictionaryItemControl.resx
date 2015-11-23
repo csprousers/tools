@@ -207,9 +207,6 @@
   <data name="textBoxItemAfterDecLength.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="textBoxItemAfterDecLength.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
   <data name="&gt;&gt;textBoxItemAfterDecLength.Name" xml:space="preserve">
     <value>textBoxItemAfterDecLength</value>
   </data>
@@ -230,9 +227,6 @@
   </data>
   <data name="textBoxItemBeforeDecLength.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
-  </data>
-  <data name="textBoxItemBeforeDecLength.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
   </data>
   <data name="&gt;&gt;textBoxItemBeforeDecLength.Name" xml:space="preserve">
     <value>textBoxItemBeforeDecLength</value>
